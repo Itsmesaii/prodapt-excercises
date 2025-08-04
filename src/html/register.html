@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Make sure body takes full viewport height */
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            flex-grow: 1; /* Allow main content to grow and push footer down */
+            display: flex;
+            align-items: center; /* Vertically center the form */
+            justify-content: center; /* Horizontally center the form */
+            padding: 30px 0;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .form-container {
+            max-width: 600px; /* Limit form width */
+            padding: 40px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .error-message {
+            color: #dc3545; /* Bootstrap danger color */
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+        .success-message {
+            color: #28a745; /* Bootstrap success color */
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            background-color: #d4edda;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="py-3">Register for an Account</h1>
+    </header>
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 form-container">
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label for="regName" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="regName" name="name" required>
+                        <div class="error-message" id="regNameError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regEmail" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="regEmail" name="email" required>
+                        <div class="error-message" id="regEmailError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regUsername" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="regUsername" name="username" required>
+                        <div class="error-message" id="regUsernameError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="regPassword" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="regPassword" name="password" required>
+                        <div class="error-message" id="regPasswordError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                    </div>
+                    <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                    </div>
+                    <div class="success-message" id="registrationSuccess" style="display:none;">
+                        <p>User has been registered successfully! You can login now.</p>
+                        <button type="button" class="btn btn-success mt-2" onclick="location.href='login.html'">Login</button>
+                    </div>
+                    <div class="error-message mt-3" id="registrationError"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            // Clear previous error messages and success message
+            document.getElementById('regNameError').textContent = '';
+            document.getElementById('regEmailError').textContent = '';
+            document.getElementById('regUsernameError').textContent = '';
+            document.getElementById('regPasswordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            document.getElementById('registrationError').textContent = '';
+            document.getElementById('registrationSuccess').style.display = 'none';
+
+            let hasError = false;
+
+            if (name === '') {
+                document.getElementById('regNameError').textContent = 'Name cannot be empty.';
+                hasError = true;
+            }
+
+            if (email === '') {
+                document.getElementById('regEmailError').textContent = 'Email cannot be empty.';
+                hasError = true;
+            } else if (!validateEmail(email)) {
+                document.getElementById('regEmailError').textContent = 'Please enter a valid email address.';
+                hasError = true;
+            }
+
+            if (username === '') {
+                document.getElementById('regUsernameError').textContent = 'Username cannot be empty.';
+                hasError = true;
+            } else {
+                // Check if username already exists in localStorage
+                const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                const usernameExists = storedUsers.some(user => user.username === username);
+                if (usernameExists) {
+                    document.getElementById('regUsernameError').textContent = 'This username is already taken. Please choose another.';
+                    hasError = true;
+                }
+            }
+
+            if (password === '') {
+                document.getElementById('regPasswordError').textContent = 'Password cannot be empty.';
+                hasError = true;
+            } else if (password.length < 8) {
+                document.getElementById('regPasswordError').textContent = 'Password must be at least 8 characters long.';
+                hasError = true;
+            } else if (!/[A-Z]/.test(password)) {
+                document.getElementById('regPasswordError').textContent = 'Password must contain at least one uppercase letter.';
+                hasError = true;
+            } else if (!/[a-z]/.test(password)) {
+                document.getElementById('regPasswordError').textContent = 'Password must contain at least one lowercase letter.';
+                hasError = true;
+            } else if (!/[0-9]/.test(password)) {
+                document.getElementById('regPasswordError').textContent = 'Password must contain at least one number.';
+                hasError = true;
+            } else if (!/[!@#$%^&*()]/.test(password)) {
+                document.getElementById('regPasswordError').textContent = 'Password must contain at least one special character (!@#$%^&*()).';
+                hasError = true;
+            }
+
+            if (confirmPassword === '') {
+                document.getElementById('confirmPasswordError').textContent = 'Please confirm your password.';
+                hasError = true;
+            } else if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+                hasError = true;
+            }
+
+            if (!hasError) {
+                // Get existing users or initialize an empty array
+                const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+                // Add the new user
+                registeredUsers.push({
+                    name: name,
+                    email: email,
+                    username: username,
+                    password: password // In a real app, hash this password!
+                });
+
+                // Store updated array back into localStorage
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+                document.getElementById('registrationSuccess').style.display = 'block';
+                document.getElementById('registerForm').reset(); // Clear the form
+            } else {
+                document.getElementById('registrationError').textContent = 'Please correct the highlighted errors.';
+            }
+        });
+    </script>
+</body>
+</html>

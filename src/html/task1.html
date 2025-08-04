@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Bootstrap Grid with Colors</title>
+
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light overall page background */
+            padding: 20px;
+        }
+        .container-fluid {
+            background-color: #ffffff; /* White background for the main container */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+        /* Style for the individual column boxes with padding and text alignment */
+        .grid-box {
+            padding: 25px; /* Ample padding inside the box */
+            text-align: center;
+            color: white; /* White text for better contrast on colors */
+            font-weight: bold;
+            border-radius: 5px; /* Slightly rounded corners for the boxes */
+            margin-bottom: 20px; /* Space below each box */
+        }
+
+        /* Specific colors for each box */
+        .color-blue { background-color: #007bff; } /* Bootstrap Primary blue */
+        .color-green { background-color: #28a745; } /* Bootstrap Success green */
+        .color-red { background-color: #dc3545; }   /* Bootstrap Danger red */
+        .color-yellow { background-color: #ffc107; color: #343a40; } /* Bootstrap Warning yellow, with dark text */
+        .color-purple { background-color: #6f42c1; } /* A custom purple */
+        .color-orange { background-color: #fd7e14; } /* A custom orange */
+
+        /* Add margin-top to rows for better separation if needed, optional */
+        .row + .row {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <h1>Colorful Bootstrap Grid Example</h1>
+        <p class="text-center text-muted">Each box below is a Bootstrap column with a distinct color.</p>
+        <hr>
+
+        <h3>Three Equal Columns</h3>
+        <div class="row">
+            <div class="col">
+                <div class="grid-box color-blue">Column 1</div>
+            </div>
+            <div class="col">
+                <div class="grid-box color-green">Column 2</div>
+            </div>
+            <div class="col">
+                <div class="grid-box color-red">Column 3</div>
+            </div>
+        </div>
+
+        <h3>Two Halves on Medium Screens, Stack on Small</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="grid-box color-yellow">Left Half (on Medium+)</div>
+            </div>
+            <div class="col-md-6">
+                <div class="grid-box color-purple">Right Half (on Medium+)</div>
+            </div>
+        </div>
+
+        <h3>Mix of Sizes on Large Screens, Stack on Small</h3>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="grid-box color-red">25% (on Large+)</div>
+            </div>
+            <div class="col-lg-6">
+                <div class="grid-box color-green">50% (on Large+)</div>
+            </div>
+            <div class="col-lg-3">
+                <div class="grid-box color-orange">25% (on Large+)</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

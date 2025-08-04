@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            flex-grow: 1;
+            padding: 30px 0;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Custom styles for profile card and stats (using Bootstrap classes for structure) */
+        .profile-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px; /* Space below card */
+        }
+        .profile-pic {
+            border-radius: 50%; /* Make image round */
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #007bff; /* Add a nice border */
+        }
+        .stat-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            margin-bottom: 20px; /* Space between stats */
+        }
+        .stat-item .icon-small {
+            font-size: 2rem;
+            color: #17a2b8; /* Bootstrap info color */
+            margin-bottom: 10px;
+        }
+        .content-block {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .content-block img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Your Dashboard</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#settings">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="logout()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-main container">
+        <h1 class="text-center my-4" id="welcomeMessage">Welcome!</h1>
+
+        <section class="dashboard-overview">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="profile-card">
+                        <img src="https://picsum.photos/id/237/100/100" alt="User Profile Picture" class="profile-pic">
+                        <h3 id="profileName">Guest User</h3>
+                        <p class="text-muted">Welcome to your personalized dashboard! Here's a quick overview of your activities.</p>
+                        <button class="btn btn-outline-primary btn-sm mt-2">Edit Profile</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="row quick-stats">
+                        <div class="col-md-4 mb-4">
+                            <div class="stat-item">
+                                <i class="fas fa-project-diagram icon-small"></i>
+                                <h4>Projects</h4>
+                                <p class="lead">12 Active</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="stat-item">
+                                <i class="fas fa-bell icon-small"></i>
+                                <h4>Notifications</h4>
+                                <p class="lead">3 New</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="stat-item">
+                                <i class="fas fa-star icon-small"></i>
+                                <h4>Favorites</h4>
+                                <p class="lead">7 Items</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-block">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="content-text">
+                        <h2 class="mb-3">Latest Updates & Resources</h2>
+                        <p>Stay informed with our newest articles, tutorials, and community discussions. We're constantly adding new content to help you succeed.</p>
+                        <p>Explore trending topics, join exciting new projects, or revisit your saved resources. Your next big idea could be just a click away!</p>
+                        <button class="btn btn-info btn-sm mt-3">View All Resources</button>
+                    </div>
+                </div>
+                <div class="col-md-5 text-center mt-4 mt-md-0">
+                    <div class="content-image">
+                        <img src="https://picsum.photos/id/400/500/300" alt="Workspace image" class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-4">
+        <div class="container">
+            <p class="mb-1">&copy; 2025 Your Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.onload = function() {
+            const loggedInUserName = localStorage.getItem('loggedInUserName');
+            if (loggedInUserName) {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${loggedInUserName}!`;
+                document.getElementById('profileName').textContent = loggedInUserName; // Update profile card name
+            } else {
+                window.location.href = 'login.html'; // Redirect if not logged in
+            }
+        };
+
+        function logout() {
+            localStorage.removeItem('loggedInUserName');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

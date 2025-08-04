@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Make sure body takes full viewport height */
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            flex-grow: 1; /* Allow main content to grow and push footer down */
+            display: flex;
+            align-items: center; /* Vertically center the form */
+            justify-content: center; /* Horizontally center the form */
+            padding: 30px 0;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .form-container {
+            /* --- CHANGES ARE HERE --- */
+            max-width: 600px; /* Increased from 450px to 600px for wider form */
+            padding: 40px; /* Increased from 30px to 40px for more internal space */
+            /* --- END CHANGES --- */
+
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center; /* Center form content */
+        }
+        .error-message {
+            color: #dc3545; /* Bootstrap danger color */
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+            text-align: left; /* Keep error messages left-aligned */
+        }
+        .register-link {
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="py-3">Login to Your Account</h1>
+    </header>
+
+    <main class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-7 form-container"> 
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control form-control-lg" id="username" name="username" required>
+                        <div class="error-message" id="usernameError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" required>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+                    <div class="d-grid gap-2"> <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                        <button type="reset" class="btn btn-outline-secondary mt-2" onclick="clearLoginErrors()">Clear</button>
+                    </div>
+                    <p class="register-link">First time logging in? <a href="register.html">Click here to Register</a></p>
+                    <div class="error-message mt-3" id="loginError"></div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+    </footer>
+
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function clearLoginErrors() {
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('loginError').textContent = '';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            clearLoginErrors(); // Clear previous error messages
+
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+
+            let hasError = false;
+
+            if (usernameInput === '') {
+                document.getElementById('usernameError').textContent = 'Username cannot be empty.';
+                hasError = true;
+            }
+            if (passwordInput === '') {
+                document.getElementById('passwordError').textContent = 'Password cannot be empty.';
+                hasError = true;
+            }
+
+            if (hasError) {
+                document.getElementById('loginError').textContent = 'Please correct the highlighted errors.';
+                return; // Stop further execution if there are errors
+            }
+
+            // Retrieve registered users from localStorage
+            const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            let userFound = false;
+            let loggedInUserName = '';
+
+            for (let i = 0; i < storedUsers.length; i++) {
+                if (storedUsers[i].username === usernameInput && storedUsers[i].password === passwordInput) {
+                    userFound = true;
+                    loggedInUserName = storedUsers[i].name; // Get the user's display name
+                    break;
+                }
+            }
+
+            if (userFound) {
+                // Store logged-in user's name for the main page
+                localStorage.setItem('loggedInUserName', loggedInUserName);
+                // Redirect directly to the main page
+                window.location.href = 'main.html';
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid username or password.';
+            }
+        });
+    </script>
+</body>
+</html>

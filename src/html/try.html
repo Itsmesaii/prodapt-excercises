@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Example</title>
+    <style>
+       p {
+            font-size: 60px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <p onmouseenter="addNode()" onmouseleave="deleteNode()">
+        My paragraph , come closer
+    </p>
+
+    <script>
+        function addNode() {
+            var element = document.querySelector('p');
+
+            if (!element.querySelector('p')) {
+                var para = document.createElement('p');
+
+                para.textContent = "We hope you enjoyed learning.";
+
+                element.appendChild(para);
+            }
+        }
+
+        function deleteNode() {
+            var element = document.querySelector('p');
+
+            var paraToDelete = document.querySelector('p p');
+
+            if (paraToDelete) {
+                element.removeChild(paraToDelete);
+            }
+        }
+    </script>
+</body>
+</html>
